@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.crm.settings.mapper.UserMapper">
+
+    <resultMap type="com.bjpowernode.crm.settings.domain.User" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="loginAct" column="login_act" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="loginPwd" column="login_pwd" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="expireTime" column="expire_time" jdbcType="VARCHAR"/>
+        <result property="lockState" column="lock_state" jdbcType="VARCHAR"/>
+        <result property="deptno" column="deptno" jdbcType="VARCHAR"/>
+        <result property="allowIps" column="allow_ips" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createTime" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="editTime" column="edit_time" jdbcType="VARCHAR"/>
+        <result property="editBy" column="edit_by" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, login_act, name, login_pwd, email, expire_time, lock_state, deptno, allow_ips,
+        createTime, create_by, edit_time, edit_by
+    </sql>
+
+    <!--  登录查找用户  -->
+    <select id="selectUserByLoginActAndPwd" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where login_act=#{loginAct} and login_pwd=#{loginPwd}
+    </select>
+
+    <!-- 查询启用的用户   -->
+    <select id="selectAllUsers" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where lock_state='1'
+    </select>
+
+
+</mapper>
+
